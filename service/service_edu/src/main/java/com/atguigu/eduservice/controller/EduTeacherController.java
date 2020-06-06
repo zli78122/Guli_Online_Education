@@ -26,6 +26,7 @@ import java.util.List;
 @Api(tags = {"讲师管理"})
 @RestController
 @RequestMapping("/eduservice/teacher")
+@CrossOrigin //解决跨域问题
 public class EduTeacherController {
 
     @Autowired
@@ -58,7 +59,7 @@ public class EduTeacherController {
         // 把分页所有数据封装到pageTeacher对象里面
         teacherService.page(pageTeacher, null);
 
-        long total = pageTeacher.getTotal(); // 总记录数
+        long total = pageTeacher.getTotal(); //总记录数
         List<EduTeacher> records = pageTeacher.getRecords(); //数据集合
 
         return R.ok().data("total", total).data("rows", records);
@@ -96,7 +97,7 @@ public class EduTeacherController {
         // 分页条件查询
         teacherService.page(pageTeacher,wrapper);
 
-        long total = pageTeacher.getTotal(); // 总记录数
+        long total = pageTeacher.getTotal(); //总记录数
         List<EduTeacher> records = pageTeacher.getRecords(); //数据集合
 
         return R.ok().data("total", total).data("rows", records);
