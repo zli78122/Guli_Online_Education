@@ -94,6 +94,9 @@ public class EduTeacherController {
             wrapper.le("gmt_create", end);
         }
 
+        // 排序
+        wrapper.orderByDesc("gmt_create");
+
         // 分页条件查询
         teacherService.page(pageTeacher,wrapper);
 
