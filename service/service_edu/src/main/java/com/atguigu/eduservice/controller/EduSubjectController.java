@@ -1,16 +1,16 @@
 package com.atguigu.eduservice.controller;
 
 import com.atguigu.commonutils.R;
+import com.atguigu.eduservice.entity.subject.OneSubject;
 import com.atguigu.eduservice.service.EduSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -38,6 +38,18 @@ public class EduSubjectController {
     public R addSubject(MultipartFile file) {
         subjectService.saveSubject(file, subjectService);
         return R.ok();
+    }
+
+    /**
+     * 查询所有课程分类，返回树形结构，前端以树形结构进行显示
+     */
+    @ApiOperation(value = "查询所有课程分类")
+    @GetMapping("/getAllSubject")
+    public R getAllSubject() {
+        // 集合的泛型类型是 OneSubject(一级分类)
+        // OneSubject对象 的 children属性 保存了 当前一级分类下的所有二级分类
+        List<OneSubject> list = subjectService.getAllOneTwoSubject();
+        return R.ok().data("list", list);
     }
 }
 
