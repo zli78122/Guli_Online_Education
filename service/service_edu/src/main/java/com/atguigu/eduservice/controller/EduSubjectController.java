@@ -52,4 +52,3 @@ public class EduSubjectController {
         return R.ok().data("list", list);
     }
 }
-
