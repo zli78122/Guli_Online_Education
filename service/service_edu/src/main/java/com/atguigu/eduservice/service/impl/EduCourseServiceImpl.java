@@ -28,9 +28,6 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
 
-    @Autowired
-    private EduSubjectService subjectService;
-
     // 添加课程基本信息
     @Override
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
@@ -38,13 +35,6 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         // 属性复制: courseInfoVo -> eduCourse
         EduCourse eduCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfoVo, eduCourse);
-
-        // 获取 subject_parent_id
-        String subjectId = eduCourse.getSubjectId();
-        EduSubject eduSubject = subjectService.getById(subjectId);
-        String parentId = eduSubject.getParentId();
-        // 设置 subject_parent_id
-        eduCourse.setSubjectParentId(parentId);
 
         int insert = baseMapper.insert(eduCourse);
         if(insert == 0) {
