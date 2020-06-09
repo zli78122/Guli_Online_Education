@@ -25,6 +25,20 @@ public class EduCourseController {
     @Autowired
     private EduCourseService courseService;
 
+    @ApiOperation(value = "修改课程信息")
+    @PostMapping("/updateCourseInfo")
+    public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo) {
+        courseService.updateCourseInfo(courseInfoVo);
+        return R.ok();
+    }
+
+    @ApiOperation(value = "根据课程id查询课程基本信息")
+    @GetMapping("/getCourseInfo/{courseId}")
+    public R getCourseInfo(@PathVariable String courseId) {
+        CourseInfoVo courseInfoVo = courseService.getCourseInfo(courseId);
+        return R.ok().data("courseInfoVo", courseInfoVo);
+    }
+
     @ApiOperation(value = "添加课程基本信息")
     @PostMapping("/addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoVo courseInfoVo) {
