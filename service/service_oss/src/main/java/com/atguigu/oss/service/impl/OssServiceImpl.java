@@ -14,9 +14,9 @@ import java.util.UUID;
 @Service
 public class OssServiceImpl implements OssService {
 
-    // 上传头像到oss
+    // 上传文件到oss
     @Override
-    public String uploadFileAvatar(MultipartFile file) {
+    public String uploadFile(MultipartFile file, String type) {
         // 获取oss连接参数
         String endpoint = ConstantPropertiesUtils.END_POIND;
         String accessKeyId = ConstantPropertiesUtils.ACCESS_KEY_ID;
@@ -44,9 +44,9 @@ public class OssServiceImpl implements OssService {
             // 20200607/027ae1a3bee04da693ec1116307ffb55-1.jpg
             fileName = datePath + "/" + fileName;
 
-            // 添加 'avatar/' 前缀
+            // 添加 type 前缀
             // avatar/20200607/027ae1a3bee04da693ec1116307ffb55-1.jpg
-            fileName = "avatar/" + fileName;
+            fileName = type + "/" + fileName;
 
             // 调用oss方法实现上传
             //   第一个参数: Bucket名称

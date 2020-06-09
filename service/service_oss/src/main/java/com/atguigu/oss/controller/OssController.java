@@ -20,12 +20,21 @@ public class OssController {
     @Autowired
     private OssService ossService;
 
-    @ApiOperation(value = "上传头像")
-    @PostMapping
-    public R uploadOssFile(MultipartFile file) {
+    @ApiOperation(value = "上传课程封面")
+    @PostMapping("/cover")
+    public R uploadCourseCover(MultipartFile file) {
         //  获取上传文件 MultipartFile对象
         //  返回上传到oss的路径
-        String url = ossService.uploadFileAvatar(file);
+        String url = ossService.uploadFile(file, "cover");
+        return R.ok().data("url", url);
+    }
+
+    @ApiOperation(value = "上传头像")
+    @PostMapping("/avatar")
+    public R uploadAvatar(MultipartFile file) {
+        //  获取上传文件 MultipartFile对象
+        //  返回上传到oss的路径
+        String url = ossService.uploadFile(file, "avatar");
         return R.ok().data("url", url);
     }
 }
