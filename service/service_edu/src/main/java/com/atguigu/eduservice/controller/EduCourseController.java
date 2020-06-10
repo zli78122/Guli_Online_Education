@@ -30,14 +30,14 @@ public class EduCourseController {
     private EduCourseService courseService;
 
     @ApiOperation(value = "删除课程")
-    @DeleteMapping("{courseId}")
+    @DeleteMapping("/{courseId}")
     public R deleteCourse(@PathVariable String courseId) {
         courseService.removeCourse(courseId);
         return R.ok();
     }
 
     @ApiOperation(value = "查询所有课程")
-    @GetMapping
+    @GetMapping("/findAll")
     public R getCourseList() {
         List<EduCourse> list = courseService.list(null);
         return R.ok().data("list", list);
