@@ -26,4 +26,7 @@ public interface EduCourseService extends IService<EduCourse> {
 
     // 根据课程id查询课程确认信息
     CoursePublishVo publishCourseInfo(String id);
+
+    // 删除课程
+    void removeCourse(String courseId);
 }

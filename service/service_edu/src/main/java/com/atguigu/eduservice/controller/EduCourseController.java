@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 前端控制器
@@ -26,6 +28,20 @@ public class EduCourseController {
 
     @Autowired
     private EduCourseService courseService;
+
+    @ApiOperation(value = "删除课程")
+    @DeleteMapping("{courseId}")
+    public R deleteCourse(@PathVariable String courseId) {
+        courseService.removeCourse(courseId);
+        return R.ok();
+    }
+
+    @ApiOperation(value = "查询所有课程")
+    @GetMapping
+    public R getCourseList() {
+        List<EduCourse> list = courseService.list(null);
+        return R.ok().data("list", list);
+    }
 
     @ApiOperation(value = "课程最终发布")
     @PostMapping("/publishCourse/{id}")
