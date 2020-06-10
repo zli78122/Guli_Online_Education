@@ -1,7 +1,9 @@
 package com.atguigu.eduservice.controller;
 
 import com.atguigu.commonutils.R;
+import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
+import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.service.EduCourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +26,24 @@ public class EduCourseController {
 
     @Autowired
     private EduCourseService courseService;
+
+    @ApiOperation(value = "课程最终发布")
+    @PostMapping("/publishCourse/{id}")
+    public R publishCourse(@PathVariable String id) {
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(id);
+        // 设置课程状态 (Draft - 课程未发布 , Normal - 课程已发布)
+        eduCourse.setStatus("Normal");
+        courseService.updateById(eduCourse);
+        return R.ok();
+    }
+
+    @ApiOperation(value = "根据课程id查询课程确认信息")
+    @GetMapping("/getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id) {
+        CoursePublishVo coursePublishVo = courseService.publishCourseInfo(id);
+        return R.ok().data("publishCourse", coursePublishVo);
+    }
 
     @ApiOperation(value = "修改课程信息")
     @PostMapping("/updateCourseInfo")
