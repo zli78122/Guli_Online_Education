@@ -4,10 +4,14 @@ import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
+import com.atguigu.eduservice.entity.vo.CourseQuery;
 import com.atguigu.eduservice.service.EduCourseService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +32,39 @@ public class EduCourseController {
 
     @Autowired
     private EduCourseService courseService;
+
+    @ApiOperation(value = "分页条件查询课程")
+    @PostMapping("/pageCourseCondition/{current}/{limit}")
+    public R pageCourseCondition(@PathVariable long current,
+                                 @PathVariable long limit,
+                                 @RequestBody(required = false) CourseQuery courseQuery) {
+
+        String title = courseQuery.getTitle();
+        String status = courseQuery.getStatus();
+
+        // 创建page对象
+        Page<EduCourse> pageCourse = new Page<>(current, limit);
+
+        // 构建条件
+        QueryWrapper<EduCourse>  wrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(title)) {
+            wrapper.like("title", title);
+        }
+        if(!StringUtils.isEmpty(status)) {
+            wrapper.eq("status", status);
+        }
+
+        // 排序
+        wrapper.orderByDesc("gmt_create");
+
+        // 分页条件查询
+        courseService.page(pageCourse, wrapper);
+
+        long total = pageCourse.getTotal(); //总记录数
+        List<EduCourse> records = pageCourse.getRecords(); //数据集合
+
+        return R.ok().data("total", total).data("rows", records);
+    }
 
     @ApiOperation(value = "删除课程")
     @DeleteMapping("/{courseId}")
