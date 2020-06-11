@@ -19,7 +19,7 @@ public class TestVod {
      */
     @Test
     public void test3() {
-        // 上传到阿里云后的 视频名称
+        // 上传到阿里云后 视频的名称
         String title = "What If I Want to Move Faster.mp4";
         // 本地文件路径
         String fileName = "/Users/zhengyuli/Desktop/What If I Want to Move Faster.mp4";
