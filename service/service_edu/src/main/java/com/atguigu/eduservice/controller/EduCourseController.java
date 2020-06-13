@@ -66,7 +66,7 @@ public class EduCourseController {
         return R.ok().data("total", total).data("rows", records);
     }
 
-    @ApiOperation(value = "删除课程")
+    @ApiOperation(value = "删除课程，同时删除视频")
     @DeleteMapping("/{courseId}")
     public R deleteCourse(@PathVariable String courseId) {
         courseService.removeCourse(courseId);

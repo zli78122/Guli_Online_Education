@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Api(tags = {"Aliyun 视频点播"})
 @RestController
 @RequestMapping("/eduvod/video")
@@ -21,6 +23,13 @@ public class VodController {
 
     @Autowired
     private VodService vodService;
+
+    @ApiOperation(value = "根据id批量删除存储在阿里云服务器上的视频文件")
+    @DeleteMapping("/delete-batch")
+    public R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList) {
+        vodService.removeMoreAlyVideo(videoIdList);
+        return R.ok();
+    }
 
     @ApiOperation(value = "根据id删除存储在阿里云服务器上的视频文件")
     @DeleteMapping("/deleteVideo/{id}")
