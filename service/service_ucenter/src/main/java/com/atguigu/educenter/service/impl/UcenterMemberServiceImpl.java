@@ -36,7 +36,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 
         // 手机号和密码非空判断
         if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)) {
-            throw new GuliException(20001, "登录失败");
+            throw new GuliException(20001, "登录数据不能为空");
         }
 
         // 判断手机号是否正确
@@ -46,19 +46,19 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         // 判断查询对象是否为空
         if (mobileMember == null) {
             // 没有这个手机号
-            throw new GuliException(20001, "登录失败");
+            throw new GuliException(20001, "手机号不正确");
         }
 
         // 判断密码
         // 数据库中的密码是加密的，所以需要先把用户输入的密码加密，再和数据库中的密码比较
         // 加密方式: MD5
         if(!MD5.encrypt(password).equals(mobileMember.getPassword())) {
-            throw new GuliException(20001, "登录失败");
+            throw new GuliException(20001, "手机号或密码错误");
         }
 
         // 判断用户是否被禁用
         if(mobileMember.getIsDisabled()) {
-            throw new GuliException(20001, "登录失败");
+            throw new GuliException(20001, "账号已被禁用，请联系管理员");
         }
 
         // 登录成功
