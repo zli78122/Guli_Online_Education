@@ -16,6 +16,8 @@
         <module>service_vod</module>
         <module>service_oss</module>
         <module>service_cms</module>
+        <module>service_msm</module>
+        <module>service_ucenter</module>
     </modules>
 
     <dependencies>
