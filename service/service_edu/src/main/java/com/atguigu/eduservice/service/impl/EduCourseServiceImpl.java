@@ -3,15 +3,23 @@ package com.atguigu.eduservice.service.impl;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduCourseDescription;
 import com.atguigu.eduservice.entity.EduSubject;
+import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.mapper.EduCourseMapper;
 import com.atguigu.eduservice.service.*;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,7 +50,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         BeanUtils.copyProperties(courseInfoVo, eduCourse);
 
         int insert = baseMapper.insert(eduCourse);
-        if(insert == 0) {
+        if (insert == 0) {
             // 添加失败
             throw new GuliException(20001, "添加课程信息失败");
         }
@@ -81,9 +89,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public void updateCourseInfo(CourseInfoVo courseInfoVo) {
         // 1.修改课程表
         EduCourse eduCourse = new EduCourse();
-        BeanUtils.copyProperties(courseInfoVo,eduCourse);
+        BeanUtils.copyProperties(courseInfoVo, eduCourse);
         int update = baseMapper.updateById(eduCourse);
-        if(update == 0) {
+        if (update == 0) {
             throw new GuliException(20001, "修改课程信息失败");
         }
 
@@ -115,8 +123,59 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
         // 4.根据课程id删除课程
         int result = baseMapper.deleteById(courseId);
-        if(result == 0) {
+        if (result == 0) {
             throw new GuliException(20001, "删除失败");
         }
+    }
+
+    // 分页条件查询课程
+    @Override
+    public Map<String, Object> getCourseFrontList(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo) {
+        // 封装查询条件
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        // 一级分类
+        if (!StringUtils.isEmpty(courseFrontVo.getSubjectParentId())) {
+            wrapper.eq("subject_parent_id", courseFrontVo.getSubjectParentId());
+        }
+        // 二级分类
+        if (!StringUtils.isEmpty(courseFrontVo.getSubjectId())) {
+            wrapper.eq("subject_id", courseFrontVo.getSubjectId());
+        }
+        // 销量排序
+        if (!StringUtils.isEmpty(courseFrontVo.getBuyCountSort())) {
+            wrapper.orderByDesc("buy_count");
+        }
+        // 最新时间排序
+        if (!StringUtils.isEmpty(courseFrontVo.getGmtCreateSort())) {
+            wrapper.orderByDesc("gmt_create");
+        }
+        // 价格排序
+        if (!StringUtils.isEmpty(courseFrontVo.getPriceSort())) {
+            wrapper.orderByDesc("price");
+        }
+
+        // 分页条件查询
+        baseMapper.selectPage(pageCourse, wrapper);
+
+        // 分页数据
+        List<EduCourse> records = pageCourse.getRecords();
+        long current = pageCourse.getCurrent();
+        long pages = pageCourse.getPages();
+        long size = pageCourse.getSize();
+        long total = pageCourse.getTotal();
+        boolean hasNext = pageCourse.hasNext();
+        boolean hasPrevious = pageCourse.hasPrevious();
+
+        // 把分页数据放到map集合中
+        Map<String, Object> map = new HashMap<>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+
+        return map;
     }
 }
