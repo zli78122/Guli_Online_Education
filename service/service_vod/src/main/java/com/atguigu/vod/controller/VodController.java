@@ -2,6 +2,8 @@ package com.atguigu.vod.controller;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.atguigu.commonutils.R;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.atguigu.vod.service.VodService;
@@ -23,6 +25,31 @@ public class VodController {
 
     @Autowired
     private VodService vodService;
+
+    @ApiOperation(value = "根据视频id获取视频播放凭证")
+    @GetMapping("/getPlayAuth/{id}")
+    public R getPlayAuth(@PathVariable String id) {
+        try {
+            // 初始化对象
+            DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+
+            // 请求对象
+            GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+
+            // 把视频id设置到请求对象中
+            request.setVideoId(id);
+
+            // 响应对象
+            GetVideoPlayAuthResponse response = client.getAcsResponse(request);
+
+            // 获取视频播放凭证
+            String playAuth = response.getPlayAuth();
+
+            return R.ok().data("playAuth", playAuth);
+        } catch(Exception e) {
+            throw new GuliException(20001, "获取视频播放凭证失败");
+        }
+    }
 
     @ApiOperation(value = "根据id批量删除存储在阿里云服务器上的视频文件")
     @DeleteMapping("/delete-batch")
