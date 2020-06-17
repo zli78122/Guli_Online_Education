@@ -2,7 +2,9 @@ package com.atguigu.eduservice.controller.front;
 
 import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduCourse;
+import com.atguigu.eduservice.entity.chapter.ChapterVo;
 import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
+import com.atguigu.eduservice.entity.frontvo.CourseWebVo;
 import com.atguigu.eduservice.service.EduChapterService;
 import com.atguigu.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,6 +25,18 @@ public class CourseFrontController {
 
     @Autowired
     private EduChapterService chapterService;
+
+    @ApiOperation(value = "根据课程id查询课程详情")
+    @GetMapping("/getFrontCourseInfo/{courseId}")
+    public R getFrontCourseInfo(@PathVariable String courseId) {
+        // 根据课程id查询课程信息
+        CourseWebVo courseWebVo = courseService.getBaseCourseInfo(courseId);
+
+        // 根据课程id查询课程的章节和小节
+        List<ChapterVo> chapterVideoList = chapterService.getChapterVideoByCourseId(courseId);
+
+        return R.ok().data("courseWebVo", courseWebVo).data("chapterVideoList", chapterVideoList);
+    }
 
     @ApiOperation(value = "分页条件查询课程")
     @PostMapping("/getFrontCourseList/{page}/{limit}")
