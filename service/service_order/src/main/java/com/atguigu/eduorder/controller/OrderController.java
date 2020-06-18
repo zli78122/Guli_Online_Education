@@ -27,6 +27,21 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @ApiOperation(value = "根据课程id和用户id查询订单状态 (用户是否已经支付课程)")
+    @GetMapping("/isBuyCourse/{courseId}/{memberId}")
+    public boolean isBuyCourse(@PathVariable String courseId, @PathVariable String memberId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", courseId);
+        wrapper.eq("member_id", memberId);
+        wrapper.eq("status", 1); //订单状态（0：未支付 1：已支付）
+        int count = orderService.count(wrapper);
+        if (count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @ApiOperation(value = "根据订单号查询订单信息")
     @GetMapping("/getOrderInfo/{orderId}")
     public R getOrderInfo(@PathVariable String orderId) {
