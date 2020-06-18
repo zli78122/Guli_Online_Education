@@ -57,7 +57,7 @@ public class CourseFrontController {
         // 用户是否已经支付课程
         boolean buyCourse;
         if ("".equals(memberId)) {
-            // 用户未登录
+            // 用户未登录，buyCourse = false
             buyCourse = false;
         } else {
             // 根据课程id和用户id查询订单状态 (用户是否已经支付课程)
