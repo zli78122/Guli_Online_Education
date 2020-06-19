@@ -29,6 +29,13 @@ public class UcenterMemberController {
     @Autowired
     private UcenterMemberService memberService;
 
+    @ApiOperation(value = "查询某一天的注册人数")
+    @GetMapping("/countRegister/{day}")
+    public R countRegister(@PathVariable String day) {
+        Integer count = memberService.countRegisterDay(day);
+        return R.ok().data("countRegister", count);
+    }
+
     @ApiOperation(value = "根据用户id获取用户信息")
     @PostMapping("/getUserInfoOrder/{id}")
     public UcenterMemberOrder getUserInfoOrder(@PathVariable String id) {

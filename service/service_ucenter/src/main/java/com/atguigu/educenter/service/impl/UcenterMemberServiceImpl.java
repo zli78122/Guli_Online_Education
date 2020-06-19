@@ -113,4 +113,10 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         UcenterMember member = baseMapper.selectOne(wrapper);
         return member;
     }
+
+    // 查询某一天的注册人数
+    @Override
+    public Integer countRegisterDay(String day) {
+        return baseMapper.countRegisterDay(day);
+    }
 }
