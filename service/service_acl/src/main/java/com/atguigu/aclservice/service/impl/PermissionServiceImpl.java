@@ -198,7 +198,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     // 把返回所有菜单list集合进行封装的方法
-    public static List<Permission> buildPermission(List<Permission> permissionList) {
+    private static List<Permission> buildPermission(List<Permission> permissionList) {
         // 创建list集合，用于数据最终封装
         List<Permission> finalNode = new ArrayList<>();
         // 把所有菜单list集合遍历，得到顶层菜单 pid=0菜单，设置level是1
