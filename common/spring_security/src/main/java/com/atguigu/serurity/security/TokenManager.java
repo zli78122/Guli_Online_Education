@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * <p>
- * token管理
+ * Token Manager
  * </p>
  *
  * @author zli78122
@@ -34,6 +34,6 @@ public class TokenManager {
     }
 
     public void removeToken(String token) {
-        // jwttoken无需删除，客户端扔掉即可。
+        // JWT token无需删除，客户端扔掉即可
     }
 }
