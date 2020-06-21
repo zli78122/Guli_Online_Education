@@ -44,7 +44,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         wrapper.orderByDesc("id");
         List<Permission> permissionList = baseMapper.selectList(wrapper);
 
-        List<Permission> result = bulid(permissionList);
+        List<Permission> result = build(permissionList);
 
         return result;
     }
@@ -67,7 +67,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             }
         }
 
-        List<Permission> permissionList = bulid(allPermissionList);
+        List<Permission> permissionList = build(allPermissionList);
         return permissionList;
     }
 
@@ -154,7 +154,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     /**
      * 使用递归方法建菜单
      */
-    private static List<Permission> bulid(List<Permission> treeNodes) {
+    private static List<Permission> build(List<Permission> treeNodes) {
         List<Permission> trees = new ArrayList<>();
         for (Permission treeNode : treeNodes) {
             if ("0".equals(treeNode.getPid())) {
@@ -169,7 +169,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
      * 递归查找子节点
      */
     private static Permission findChildren(Permission treeNode, List<Permission> treeNodes) {
-        treeNode.setChildren(new ArrayList<Permission>());
+        treeNode.setChildren(new ArrayList<>());
 
         for (Permission it : treeNodes) {
             if (treeNode.getId().equals(it.getPid())) {
