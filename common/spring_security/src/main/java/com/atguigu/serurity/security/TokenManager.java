@@ -36,5 +36,4 @@ public class TokenManager {
     public void removeToken(String token) {
         // jwttoken无需删除，客户端扔掉即可。
     }
-
 }

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  * <p>
- * 未授权的统一处理方式
+ * 权限不足时的统一处理方式
  * </p>
  *
  * @author zli78122
