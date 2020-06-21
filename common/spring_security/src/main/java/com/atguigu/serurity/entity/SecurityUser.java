@@ -16,20 +16,21 @@ import java.util.List;
  * 安全认证用户详情信息
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author zli78122
+ * @since 2020-06-20
  */
 @Data
 @Slf4j
 public class SecurityUser implements UserDetails {
 
-    //当前登录用户
+    // 当前登录用户
     private transient User currentUserInfo;
 
-    //当前权限
+    // 用户权限
     private List<String> permissionValueList;
 
     public SecurityUser() {
+
     }
 
     public SecurityUser(User user) {
@@ -46,7 +47,6 @@ public class SecurityUser implements UserDetails {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);
             authorities.add(authority);
         }
-
         return authorities;
     }
 

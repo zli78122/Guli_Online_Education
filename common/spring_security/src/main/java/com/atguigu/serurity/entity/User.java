@@ -11,8 +11,8 @@ import java.io.Serializable;
  * 用户实体类
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author zli78122
+ * @since 2020-06-20
  */
 @Data
 @ApiModel(description = "用户实体类")
@@ -34,8 +34,4 @@ public class User implements Serializable {
 
 	@ApiModelProperty(value = "用户签名")
 	private String token;
-
 }
-
-
-

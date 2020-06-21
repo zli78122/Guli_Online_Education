@@ -19,11 +19,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * <p>
- * Security配置类
+ * SpringSecurity配置类
  * </p>
  *
- * @author qy
- * @since 2019-11-18
+ * @author zli78122
+ * @since 2020-06-20
  */
 @Configuration
 @EnableWebSecurity
@@ -45,9 +45,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 配置设置
-     * @param http
-     * @throws Exception
+     * 核心配置
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -63,9 +61,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 密码处理
-     * @param auth
-     * @throws Exception
+     * 密码配置
      */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -73,16 +69,14 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 配置哪些请求不拦截
-     * @param web
-     * @throws Exception
+     * 配置不拦截哪些请求
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/api/**",
-//                "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"
-//               );
-        web.ignoring().antMatchers("/*/**"
-        );
+        web.ignoring().antMatchers("/api/**",
+                "/swagger-resources/**",
+                "/webjars/**",
+                "/v2/**",
+                "/swagger-ui.html/**");
     }
 }
