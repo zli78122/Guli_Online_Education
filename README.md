@@ -8,3 +8,14 @@
 * Predicted users’ ratings for courses based on the generated models using Pearson Correlation Coefficient and calculated **RMSE** equal to **0.899**.
 * Integrated **Amazon S3** saving image objects and **Alibaba Cloud VoD** uploading and watching course videos for durability and availability.
 * Created MySQL database on **Amazon RDS** and deployed the application to **Amazon EC2** for better performance.
+
+## Tech Stacks
+IntelliJ IDEA，Visual Studio Code  
+MySQL, Redis  
+Spring, Spring MVC, MyBatis/MyBatis-Plus, Spring Security, Spring Boot, Spring Cloud  
+Swagger2, Nginx, EasyExcel, Tinymce, JWT, HttpClient, Cron, Canal  
+HTML, CSS, JavaScript, JSON  
+ES6, Axios, element-ui, Node.js, Webpack, Vue.js, Nuxt.js, ECharts  
+SLF4J, logback  
+Maven, Git/GitHub  
+Social Login, WeChat Pay  
