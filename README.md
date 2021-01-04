@@ -1,6 +1,9 @@
 # Guli Online Education
 
-*Website: https://youtu.be/t-wol7UFu_s*  
+*Video: https://youtu.be/t-wol7UFu_s*  
+
+*Backend Source Code: https://github.com/zli78122/Guli_Online_Education*
+*Frontend Source Code: https://github.com/zli78122/Guli_Online_Education_Front-end*
 
 ## Introduction
 * Developed a **B2C** online education website using a development model of separation of frontend and backend, the backend is a **microservice** architecture built by the **MVC design pattern** based on **Spring Boot** and **Spring Cloud**, and the frontend is based on **Vue.js**.
