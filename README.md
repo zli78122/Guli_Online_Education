@@ -1,4 +1,4 @@
-# Guli Online Education
+# Online Education and Course Recommendation System
 
 *Video: https://youtu.be/t-wol7UFu_s*  
 
